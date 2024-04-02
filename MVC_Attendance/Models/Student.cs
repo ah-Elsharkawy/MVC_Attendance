@@ -24,17 +24,7 @@ namespace MVC_Attendance.Models
         public int GraduationYear { get; set; }
         public double AbsenceDegree { get; set; }
         public int NumberOfAbsences { get; set; }
-
-        
-
-
-
-        // Properties(Optional)
-
-        // Foreign Key
-
-        // Navigation Properties
-
+        public virtual ICollection<Permission> Permissions { get; set; } = new List<Permission>();
 
     }
 }

@@ -4,6 +4,7 @@ using MVC_Attendance.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Attendance.Migrations
 {
     [DbContext(typeof(AttDbContext))]
-    partial class AttDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240402111250_fixing-permissions")]
+    partial class fixingpermissions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,14 +45,9 @@ namespace MVC_Attendance.Migrations
                     b.Property<int>("ScheduleId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ScheduleId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Attendances");
                 });
@@ -315,15 +313,7 @@ namespace MVC_Attendance.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MVC_Attendance.Models.User", "User")
-                        .WithMany("Attendances")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Schedule");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MVC_Attendance.Models.Intake", b =>
@@ -465,11 +455,6 @@ namespace MVC_Attendance.Migrations
                 });
 
             modelBuilder.Entity("MVC_Attendance.Models.Schedule", b =>
-                {
-                    b.Navigation("Attendances");
-                });
-
-            modelBuilder.Entity("MVC_Attendance.Models.User", b =>
                 {
                     b.Navigation("Attendances");
                 });

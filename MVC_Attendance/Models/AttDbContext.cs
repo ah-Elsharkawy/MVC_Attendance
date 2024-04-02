@@ -18,6 +18,7 @@ namespace MVC_Attendance.Models
         public virtual DbSet<Schedule> Schedules { get; set; }
         public virtual DbSet<StdIntakeTrack> StdIntakeTrack { get; set; }
         public virtual DbSet<Supervise> Supervises { get; set; }
+        public virtual DbSet<Permission> Permissions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().UseTptMappingStrategy();
@@ -27,6 +28,8 @@ namespace MVC_Attendance.Models
             modelBuilder.Entity<StdIntakeTrack>().HasKey(SIT => new {SIT.IntakeId, SIT.TrackId, SIT.StudentId});
 
             modelBuilder.Entity<Supervise>().HasKey(s => new { s.TrackId, s.IntakeId, s.InstructorId });
+
+            modelBuilder.Entity<Permission>().HasKey(p => new {p.StudentId, p.date});
 
             base.OnModelCreating(modelBuilder);
         }

@@ -37,5 +37,6 @@ namespace MVC_Attendance.Models
 
         [EnumDataType(typeof(Role))]
         public Role role { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; } = new List<Attendance>();
     }
 }

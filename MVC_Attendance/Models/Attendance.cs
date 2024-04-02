@@ -16,5 +16,8 @@ namespace MVC_Attendance.Models
 
         [ForeignKey(nameof(ScheduleId))]
         public Schedule Schedule { get; set; }
+        public int UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public virtual User User { get; set; }
     }
 }
