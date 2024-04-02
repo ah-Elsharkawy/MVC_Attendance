@@ -12,9 +12,8 @@ namespace MVC_Attendance.Models
     }
     public abstract class User
     {
-        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; }
+        public int Id { get; set; }
 
         [StringLength(maximumLength: 100, MinimumLength = 3)]
         public string FirstName { get; set; }
