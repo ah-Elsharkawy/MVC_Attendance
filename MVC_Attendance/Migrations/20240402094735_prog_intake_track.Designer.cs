@@ -4,6 +4,7 @@ using MVC_Attendance.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Attendance.Migrations
 {
     [DbContext(typeof(AttDbContext))]
-    partial class AttDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240402094735_prog_intake_track")]
+    partial class prog_intake_track
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,33 +24,6 @@ namespace MVC_Attendance.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("MVC_Attendance.Models.Attendance", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<TimeOnly>("AttendanceTime")
-                        .HasColumnType("time");
-
-                    b.Property<DateOnly>("Date")
-                        .HasColumnType("date");
-
-                    b.Property<TimeOnly>("LeavingTime")
-                        .HasColumnType("time");
-
-                    b.Property<int>("ScheduleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ScheduleId");
-
-                    b.ToTable("Attendances");
-                });
 
             modelBuilder.Entity("MVC_Attendance.Models.ITIProgram", b =>
                 {
@@ -105,47 +81,6 @@ namespace MVC_Attendance.Migrations
                     b.HasIndex("TrackId");
 
                     b.ToTable("IntakesTracks");
-                });
-
-            modelBuilder.Entity("MVC_Attendance.Models.Schedule", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<TimeOnly>("StartDate")
-                        .HasColumnType("time");
-
-                    b.Property<int>("TrackId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TrackId");
-
-                    b.ToTable("Schedules");
-                });
-
-            modelBuilder.Entity("MVC_Attendance.Models.StdIntakeTrack", b =>
-                {
-                    b.Property<int>("IntakeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrackId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("IntakeId", "TrackId", "StudentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("TrackId");
-
-                    b.ToTable("StdIntakeTrack");
                 });
 
             modelBuilder.Entity("MVC_Attendance.Models.Track", b =>
@@ -237,12 +172,12 @@ namespace MVC_Attendance.Migrations
                 {
                     b.HasBaseType("MVC_Attendance.Models.User");
 
-                    b.Property<double>("AbsenceDegree")
-                        .HasColumnType("float");
-
                     b.Property<string>("Faculty")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Grade")
+                        .HasColumnType("float");
 
                     b.Property<int>("GraduationYear")
                         .HasColumnType("int");
@@ -259,17 +194,6 @@ namespace MVC_Attendance.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("MVC_Attendance.Models.Attendance", b =>
-                {
-                    b.HasOne("MVC_Attendance.Models.Schedule", "Schedule")
-                        .WithMany("Attendances")
-                        .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("MVC_Attendance.Models.Intake", b =>
@@ -298,44 +222,6 @@ namespace MVC_Attendance.Migrations
                         .IsRequired();
 
                     b.Navigation("Intake");
-
-                    b.Navigation("Track");
-                });
-
-            modelBuilder.Entity("MVC_Attendance.Models.Schedule", b =>
-                {
-                    b.HasOne("MVC_Attendance.Models.Track", "Track")
-                        .WithMany()
-                        .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Track");
-                });
-
-            modelBuilder.Entity("MVC_Attendance.Models.StdIntakeTrack", b =>
-                {
-                    b.HasOne("MVC_Attendance.Models.Intake", "Intake")
-                        .WithMany()
-                        .HasForeignKey("IntakeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MVC_Attendance.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MVC_Attendance.Models.Track", "Track")
-                        .WithMany()
-                        .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Intake");
-
-                    b.Navigation("Student");
 
                     b.Navigation("Track");
                 });
@@ -370,11 +256,6 @@ namespace MVC_Attendance.Migrations
             modelBuilder.Entity("MVC_Attendance.Models.ITIProgram", b =>
                 {
                     b.Navigation("Intakes");
-                });
-
-            modelBuilder.Entity("MVC_Attendance.Models.Schedule", b =>
-                {
-                    b.Navigation("Attendances");
                 });
 #pragma warning restore 612, 618
         }

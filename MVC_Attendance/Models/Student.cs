@@ -1,4 +1,6 @@
-﻿namespace MVC_Attendance.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MVC_Attendance.Models
 {
     /// <summary>
     /// Student Model
@@ -20,8 +22,12 @@
         public string Faculty { get; set; }
         public string Specialization { get; set; }
         public int GraduationYear { get; set; }
-        public double Grade { get; set; }
+        public double AbsenceDegree { get; set; }
         public int NumberOfAbsences { get; set; }
+
+        
+
+
 
         // Properties(Optional)
 

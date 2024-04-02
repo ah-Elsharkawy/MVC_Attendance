@@ -4,6 +4,7 @@ using MVC_Attendance.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Attendance.Migrations
 {
     [DbContext(typeof(AttDbContext))]
-    partial class AttDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240402101530_attendance_schedule")]
+    partial class attendance_schedule
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,26 +129,6 @@ namespace MVC_Attendance.Migrations
                     b.HasIndex("TrackId");
 
                     b.ToTable("Schedules");
-                });
-
-            modelBuilder.Entity("MVC_Attendance.Models.StdIntakeTrack", b =>
-                {
-                    b.Property<int>("IntakeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrackId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("IntakeId", "TrackId", "StudentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.HasIndex("TrackId");
-
-                    b.ToTable("StdIntakeTrack");
                 });
 
             modelBuilder.Entity("MVC_Attendance.Models.Track", b =>
@@ -309,33 +292,6 @@ namespace MVC_Attendance.Migrations
                         .HasForeignKey("TrackId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Track");
-                });
-
-            modelBuilder.Entity("MVC_Attendance.Models.StdIntakeTrack", b =>
-                {
-                    b.HasOne("MVC_Attendance.Models.Intake", "Intake")
-                        .WithMany()
-                        .HasForeignKey("IntakeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MVC_Attendance.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MVC_Attendance.Models.Track", "Track")
-                        .WithMany()
-                        .HasForeignKey("TrackId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Intake");
-
-                    b.Navigation("Student");
 
                     b.Navigation("Track");
                 });

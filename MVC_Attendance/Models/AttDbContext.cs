@@ -10,11 +10,22 @@ namespace MVC_Attendance.Models
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
-
-
+        public virtual DbSet<ITIProgram> ITIPrograms { get; set; }
+        public virtual DbSet<Intake> Intakes { get; set; }
+        public virtual DbSet<Track> Tracks { get; set; }
+        public virtual DbSet<IntakesTracks> IntakesTracks { get; set; }
+        public virtual DbSet<Attendance> Attendances { get; set; }
+        public virtual DbSet<Schedule> Schedules { get; set; }
+        public virtual DbSet<StdIntakeTrack> StdIntakeTrack { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().UseTptMappingStrategy();
+
+            modelBuilder.Entity<IntakesTracks>().HasKey(it => new {it.IntakeId, it.TrackId});
+
+            modelBuilder.Entity<StdIntakeTrack>().HasKey(SIT => new {SIT.IntakeId, SIT.TrackId, SIT.StudentId});
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
